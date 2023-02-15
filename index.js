@@ -7,7 +7,12 @@ const {dbCONN} = require('./database/db')
 
 const app = express();
 
-//dbCONN();
+dbCONN();
+
+
+//LECTURA DE UN JSON
+
+app.use(express.json())
 
 /*app.get('/',(req, res) => {
     res.status(200).json({
@@ -28,7 +33,7 @@ const app = express();
 
 app.use('', require('./routes/usuarios'));
 
-//app.use('/usuarios', require('./routes/usuarios')); //localhost:3000/usuarios
+//app.use('/usuarios', require('./routes/usuarios')); //ejemplo - localhost:3000/usuarios
 
 app.listen(process.env.PORT, () => {
     console.log(`Te has conectado ${process.env.PORT}`)
