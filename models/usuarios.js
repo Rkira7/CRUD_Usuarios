@@ -22,8 +22,10 @@ const UsuariosSchema = Schema({
         default: 'USER_ROLE'
     }
 
-
-
+},
+{
+    versionKey: false,
+    timestamps: true
 });
 
 module.exports = model('Usuarios', UsuariosSchema)
