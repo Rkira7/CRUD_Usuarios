@@ -22,8 +22,16 @@ const UsuariosSchema = Schema({
         default: 'USER_ROLE'
     }
 
-
-
+},
+{
+    versionKey: false,
+    timestamps: true
 });
 
+UsuariosSchema.method('toJSON', function(){
+    const {_id, password, ...object} = this.toObject();
+    object.uid = _id;
+    return object;
+})
+                        //PARA CREAR EL NOMBRE DE LA TABLA
 module.exports = model('Usuarios', UsuariosSchema)

@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
+mongoose.set('strictQuery', false);
+
 
 //Crear la conexion a la DB
 
 const dbCONN = async() => {
     try {
+       
         await mongoose.connect( process.env.db_CONN, {
             useNewUrlParser: true,
             useUnifiedTopology: true
