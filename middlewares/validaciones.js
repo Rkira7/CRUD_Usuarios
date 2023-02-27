@@ -1,6 +1,7 @@
 const {response} = require ('express'); //PARA IDENTIFICAR QUE ES UNA VARIABLE DE TIPO RESPONSE
 const {validationResult} = require ('express-validator');
 
+//VALIDA LOS CAMPOS
 const validarCampos = (req, resp = response, next) => {
 
     const errores = validationResult(req);
@@ -12,7 +13,7 @@ const validarCampos = (req, resp = response, next) => {
         })
     }
 
-    next();
+    
 }
 
 module.exports = {validarCampos}

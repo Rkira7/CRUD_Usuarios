@@ -10,9 +10,11 @@ router.get('/', getUsuario);
 
 router.post('/', 
     [
+        //VEFIFICA QUE LAS CONDICIONES ESTEN BIEN
         check('nombre', 'El nombre es obligatorio').not().isEmpty(),
         check('email', 'El correo es obligatorio').not().isEmpty().isEmail(),
         check('password', 'El contraseña es obligatorio').not().isEmpty(),
+        //MANDA EL ERROR QUE HAYA OCURRIDO
         validarCampos
         
     ], crearUsuario);
