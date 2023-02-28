@@ -13,7 +13,7 @@ const validarCampos = (req, resp = response, next) => {
         })
     }
 
-    
+    next();
 }
 
 module.exports = {validarCampos}

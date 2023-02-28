@@ -53,11 +53,33 @@ const crearUsuario = async (req, res) => {
 
 }
 
-const actualizarUsuario = (req, res) => {
-    res.status(200).json({
-        ok: true,
-        msg: 'Usuario Actualizado'
-    })
+const actualizarUsuario = async (req, res) => {
+
+    const uid = req.params.id;
+
+    try {
+        const  { password, email, ...campos } = req.body; // SE OMITEN EL PASSWORD Y EL EMAIL
+
+        campos.email = email; //PARA QUE SE PUEDA ACTUALIZAR  DE LOS CAMPOS OMITIDOS
+        //campos.password = password;
+
+        const usuarioActualizado = await Usuarios.findByIdAndUpdate(uid, campos, {rawResult: true});
+
+        res.status(200).json({
+            ok: true,
+            msg: 'Usuario Actualizado',
+            usuario: usuarioActualizado,
+        })
+        
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'No se encontro el usuario con ese ID ',
+            error
+        })
+    }
+
+    
 }
 
 const eliminarUsuario = (req, res) => {
