@@ -58,7 +58,27 @@ const actualizarUsuario = async (req, res) => {
     const uid = req.params.id;
 
     try {
+
+        const datosUsuario = await Usuarios.findById(uid);
+        console.log(datosUsuario);
+
         const  { password, email, ...campos } = req.body; // SE OMITEN EL PASSWORD Y EL EMAIL
+
+        if(datosUsuario.email != email){
+            console.log(email);
+            const existeEmail = await Usuarios.findOne({email})
+
+            console.log(existeEmail);
+
+            if(existeEmail){
+                console.log("existeEmail");
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Ya existe usuario con ese email',
+                })
+            }
+
+        }
 
         campos.email = email; //PARA QUE SE PUEDA ACTUALIZAR  DE LOS CAMPOS OMITIDOS
         //campos.password = password;
