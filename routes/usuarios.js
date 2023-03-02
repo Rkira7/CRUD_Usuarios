@@ -29,7 +29,7 @@ router.put('/:id',  [
     
 ],actualizarUsuario)
 
-router.delete('/', eliminarUsuario)
+router.delete('/:id', eliminarUsuario)
 
 
 module.exports = router;

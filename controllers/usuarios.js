@@ -4,10 +4,14 @@
 const Usuarios = require('../models/usuarios');
 const { response } = require('express');
 
-const getUsuario = (req, res = response) => {
+const getUsuario = async (req, res = response) => {
+
+    const usuarios = await Usuarios.find({}, 'nombre email curp role')
+
     res.status(200).json({
         ok: true,
-        msg: 'Obtener usuario'
+        msg: 'Obtener usuario',
+        usuarios
     })
 }
 
@@ -59,19 +63,19 @@ const actualizarUsuario = async (req, res) => {
 
     try {
 
+        //BUSCA EL USUARIO POR EL ID
         const datosUsuario = await Usuarios.findById(uid);
-        console.log(datosUsuario);
 
         const  { password, email, ...campos } = req.body; // SE OMITEN EL PASSWORD Y EL EMAIL
 
+        //VERIFICAR QUE EL EMAIL SEA DIFERENTE
         if(datosUsuario.email != email){
-            console.log(email);
+            
+            //BUSCA UN USUARIO POR EL CORREO PARA VALIDAR
             const existeEmail = await Usuarios.findOne({email})
 
-            console.log(existeEmail);
-
+            //SI EL CORREO YA EXISTE
             if(existeEmail){
-                console.log("existeEmail");
                 return res.status(400).json({
                     ok: false,
                     msg: 'Ya existe usuario con ese email',
@@ -102,11 +106,44 @@ const actualizarUsuario = async (req, res) => {
     
 }
 
-const eliminarUsuario = (req, res) => {
-    res.status(200).json({
-        ok: true,
-        msg: 'Usuario eliminado'
-    })
+const eliminarUsuario = async (req, res) => {
+   
+
+    try {
+        const uid = req.params.id;
+
+         //BUSCA EL USUARIO POR EL ID
+         const datosUsuario = await Usuarios.findById(uid);
+
+         if(!datosUsuario){
+            console.log("sdsd");
+            return res.status(404).json({
+                ok: false,
+                msg: 'Usuario no encontrado',
+            })
+         }
+
+
+        const usuarioEliminado = await Usuarios.findByIdAndDelete(uid);
+
+    
+
+        res.status(200).json({
+            ok: true,
+            msg: 'Usuario eliminado',
+            usuario: usuarioEliminado
+        })
+
+
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Usuario no se ha eliminado',
+            error
+        })
+    }
+   
 }
 
 
