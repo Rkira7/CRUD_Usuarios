@@ -116,17 +116,13 @@ const eliminarUsuario = async (req, res) => {
          const datosUsuario = await Usuarios.findById(uid);
 
          if(!datosUsuario){
-            console.log("sdsd");
             return res.status(404).json({
                 ok: false,
                 msg: 'Usuario no encontrado',
             })
          }
 
-
         const usuarioEliminado = await Usuarios.findByIdAndDelete(uid);
-
-    
 
         res.status(200).json({
             ok: true,
