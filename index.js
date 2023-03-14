@@ -6,11 +6,7 @@ require('dotenv').config()
 
 const app = express();
 
-
-
-
 //LECTURA DE UN JSON
-
 app.use(express.json())
 
 

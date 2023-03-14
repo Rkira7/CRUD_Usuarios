@@ -3,9 +3,20 @@
 
 const Usuarios = require('../models/usuarios');
 const { response } = require('express');
+const mysql = require('../database/dbmysql')
+
+const conn = mysql();
+
 
 const getUsuario = async (req, res = response) => {
 
+    conn.query(
+        'SELECT * FROM usuario',
+        function(err, results, fields){
+            console.log(results);
+            console.log(fields);
+        }
+    )
    
 }
 
